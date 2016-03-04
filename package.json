@@ -1,10 +1,10 @@
 {
-  "name": "todo",
+  "name": "todos",
   "version": "1.0.0",
   "description": "ToDo web-app for single user",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/remonbonbon/todo.git"
+    "url": "git+https://github.com/remonbonbon/todos.git"
   },
   "author": "remonbonbon",
   "license": "MIT",
