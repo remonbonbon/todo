@@ -49,7 +49,11 @@ const vm = new Vue({
 			if (!value) {
 				return;
 			}
-			this.todos.push({ title: value, completed: false });
+			this.todos.push({
+				title: value,
+				completed: false,
+				priority: 1
+			});
 			this.newTodo = '';
 		},
 		toggleTodo: function(todo) {

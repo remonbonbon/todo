@@ -30,12 +30,25 @@ block content
 			table.table.table-hover
 				tbody
 					tr(v-for="todo in filteredTodos"
-						:class="{success: todo.completed}")
-						td(@click="toggleTodo(todo)")
+						:class="{success: todo.completed}"
+						style="display: flex; flex-flow: row nowrap;")
+						td(@click="toggleTodo(todo)" style="flex: 0 0 auto; cursor: pointer")
 							i.fa.fa-lg.fa-fw.fa-check-square-o.text-success(v-if="todo.completed")
 							i.fa.fa-lg.fa-fw.fa-square-o.text-muted(v-else)
-						td
+						td(style="flex: 1 1 auto")
 							span {{ todo.title }}
-						td
+						td(style="flex: 0 0 auto")
+							input(type="range" list="priorityList"
+								min="0" max="2" style="width: 6em; display: inline-block"
+								v-model="todo.priority" number)
+						td(style="flex: 0 0 auto; min-width: 4em")
+							span.label.label-default(v-if="todo.priority === 0") Low
+							span.label.label-warning(v-if="todo.priority === 2") High
+						td(style="flex: 0 0 auto")
 							button.btn.btn-xs.btn-danger(@click="removeTodo(todo)")
 								i.fa.fa-lg.fa-times
+		.hidden
+			datalist#priorityList
+				option(value="0")
+				option(value="1")
+				option(value="2")
