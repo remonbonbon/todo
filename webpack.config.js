@@ -4,9 +4,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 const BUILD = [
-	{type: 'js',   entry: './src/index.js'},
-	{type: 'css',  entry: './src/index.scss'},
-	{type: 'html', entry: './src/index.jade'},
+	{type: 'js',   entry: './src/app.js', output: 'bundle.js'},
+	{type: 'css',  entry: './src/app.scss', output: 'bundle.css'},
+	{type: 'html', entry: './src/index.jade', output: 'index.html'},
 ];
 
 const IS_DEBUG = process.env.NODE_ENV !== 'production';
@@ -15,9 +15,8 @@ module.exports = {
 	context: __dirname,
 	entry: BUILD.reduce((result, a) => {
 		// Create JS and CSS entries
-		const basename = path.basename(a.entry, path.extname(a.entry));
-		if ('js'  === a.type) result[basename + '.js'] = a.entry;
-		if ('css' === a.type) result[basename + '.css'] = a.entry;
+		if ('js'  === a.type) result[a.output] = a.entry;
+		if ('css' === a.type) result[a.output] = a.entry;
 		return result;
 	}, {}),
 	output: {
@@ -41,10 +40,9 @@ module.exports = {
 	},
 	plugins: BUILD.map((a) => {
 		// Create HtmlWebpackPlugin for jade entries
-		const basename = path.basename(a.entry, path.extname(a.entry));
 		if ('html' === a.type) {
 			return new HtmlWebpackPlugin({
-				filename: basename + '.html',
+				filename: a.output,
 				template: a.entry,
 				inject: false,
 			});

@@ -1,10 +1,41 @@
-doctype html
-html
-	head
-		meta(charset="UTF-8")
-		title todos
-		meta(name="viewport" content="width=device-width,initial-scale=1")
-		link(rel="stylesheet" href="index.css")
-	body
-		h1 hello world!
-		script(src="index.js")
+extends ./layout.jade
+
+block head
+	title todos
+	+useCss("//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css")
+	+useCss("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css")
+	+useCss("bundle.css")
+
+block scripts
+	+useScript("bundle.js")
+
+block content
+	#app.container(v-cloak)
+		h1.row todos
+		header.row
+			input.form-control(
+				autofocus
+				autocomplete="off"
+				placeholder="What needs to be done?"
+				v-model="newTodo"
+				@keyup.enter="addTodo")
+		section.row
+			button.btn.btn-default(@click="filter = 'all'"
+				:class="{active: filter === 'all'}") All
+			button.btn.btn-default(@click="filter = 'active'"
+				:class="{active: filter === 'active'}") Active
+			button.btn.btn-default(@click="filter = 'completed'"
+				:class="{active: filter === 'completed'}") Completed
+		section.row
+			table.table.table-hover
+				tbody
+					tr(v-for="todo in filteredTodos"
+						:class="{success: todo.completed}")
+						td(@click="toggleTodo(todo)")
+							i.fa.fa-lg.fa-fw.fa-check-square-o.text-success(v-if="todo.completed")
+							i.fa.fa-lg.fa-fw.fa-square-o.text-muted(v-else)
+						td
+							span {{ todo.title }}
+						td
+							button.btn.btn-xs.btn-danger(@click="removeTodo(todo)")
+								i.fa.fa-lg.fa-times
