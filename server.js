@@ -10,7 +10,7 @@ const path = require('path');
 
 const app = express();
 app.use(compress());
-app.use('/', express.static('./build', {maxAge: '1w'}));
+app.use('/', express.static('./build', {maxAge: '1y'}));
 app.use(bodyParser.json());
 
 // Get ToDo
