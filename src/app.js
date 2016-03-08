@@ -24,8 +24,11 @@ const vm = new Vue({
 	el: '#app',
 	data: {
 		todos: TodoStore.fetch(),
-		newTodo: '',
 		filter: FilterStore.fetch(),
+		newTodo: '',
+		editedTodo: null,
+		editedTodoTitle: null,
+		beforeEditTitle: '',
 	},
 	watch: {
 		todos: {
@@ -80,6 +83,46 @@ const vm = new Vue({
 				// If completed todo exists
 				this.todos = filters.active(this.todos);
 			}
+		},
+
+		editTodo: function(todo) {
+			if (this.editedTodo === todo) {
+				return;
+			}
+			this.editedTodo = todo;
+			this.editedTodoTitle = todo.title;
+			this.beforeEditTitle = todo.title;
+		},
+		doneEdit: function(todo) {
+			if (!this.editedTodo) {
+				return;
+			}
+			todo.title = this.editedTodoTitle.trim();
+			this.editedTodo = null;
+			this.editedTodoTitle = null;
+			if (!todo.title) {
+				this.removeTodo(todo);
+			}
+		},
+		cancelEdit: function(todo) {
+			this.editedTodo = null;
+			this.editedTodoTitle = null;
+			todo.title = this.beforeEditTitle;
+		},
+	},
+
+	// a custom directive to wait for the DOM to be updated
+	// before focusing on the input field.
+	// http://vuejs.org/guide/custom-directive.html
+	directives: {
+		'todo-focus': function(value) {
+			if (!value) {
+				return;
+			}
+			Vue.nextTick(() => {
+				// Focus on input element
+				this.el.focus();
+			});
 		}
 	},
 });

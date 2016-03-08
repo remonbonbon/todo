@@ -40,8 +40,16 @@ block content
 						td(@click="toggleTodo(todo)" style="flex: 0 0 auto; cursor: pointer")
 							i.fa.fa-lg.fa-fw.fa-check-square-o.text-success(v-if="todo.completed")
 							i.fa.fa-lg.fa-fw.fa-square-o.text-muted(v-else)
-						td(style="flex: 1 1 auto")
-							span {{ todo.title }}
+						td(style="flex: 1 1 auto" @click="editTodo(todo)")
+							input(class="edit" type="text" v-if="todo === editedTodo"
+								v-model="editedTodoTitle"
+								v-todo-focus="todo === editedTodo"
+								@blur="doneEdit(todo)"
+								@keyup.enter="doneEdit(todo)"
+								@keyup.esc="cancelEdit(todo)"
+								style="width: 100%")
+							span(v-else
+								style="word-break: break-all") {{ todo.title }}
 						td(style="flex: 0 0 auto")
 							input(type="range" list="priorityList"
 								min="0" max="2" style="width: 6em; display: inline-block"
