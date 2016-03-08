@@ -1,8 +1,15 @@
-[v-cloak] {
-	display: none;
-}
-
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 $fa-font-path: './fonts' !default;
 @import '../node_modules/font-awesome/scss/font-awesome';
+
+[v-cloak] {
+	display: none;
+}
+
+.todo__toggle {
+	:hover {
+    color: $brand-success;
+		cursor: pointer
+	}
+}
