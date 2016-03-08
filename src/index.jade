@@ -11,22 +11,27 @@ block scripts
 
 block content
 	#app.container(v-cloak)
-		h1.row todos
-		header.row
+		h1 todos
+		header
 			input.form-control(
 				autofocus
 				autocomplete="off"
 				placeholder="What needs to be done?"
 				v-model="newTodo"
 				@keyup.enter="addTodo")
-		section.row
+		section
+			span #[strong(v-text="remaining")] {{remaining | pluralize 'item'}} left
+			label
+				input(type="checkbox" v-model="allDone")
+				| All Done
 			button.btn.btn-default(@click="filter = 'all'"
 				:class="{active: filter === 'all'}") All
 			button.btn.btn-default(@click="filter = 'active'"
 				:class="{active: filter === 'active'}") Active
 			button.btn.btn-default(@click="filter = 'completed'"
 				:class="{active: filter === 'completed'}") Completed
-		section.row
+			button.btn.btn-default.pull-right(@click="removeCompleted") Clear completed
+		section
 			table.table.table-hover
 				tbody
 					tr(v-for="todo in filteredTodos"

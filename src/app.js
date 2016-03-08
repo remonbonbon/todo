@@ -5,16 +5,16 @@ const TodoStore = require('./store-todos');
 const FilterStore = require('./store-filter');
 
 var filters = {
-	all: function (todos) {
+	all: function(todos) {
 		return todos;
 	},
-	active: function (todos) {
-		return todos.filter(function (todo) {
+	active: function(todos) {
+		return todos.filter(function(todo) {
 			return !todo.completed;
 		});
 	},
-	completed: function (todos) {
-		return todos.filter(function (todo) {
+	completed: function(todos) {
+		return todos.filter(function(todo) {
 			return todo.completed;
 		});
 	}
@@ -42,6 +42,19 @@ const vm = new Vue({
 		filteredTodos: function() {
 			return filters[this.filter](this.todos);
 		},
+		remaining: function() {
+			return filters.active(this.todos).length;
+		},
+		allDone: {
+			get: function() {
+				return this.remaining === 0;
+			},
+			set: function(value) {
+				this.todos.forEach(function (todo) {
+					todo.completed = value;
+				});
+			}
+		},
 	},
 	methods: {
 		addTodo: function(event) {
@@ -62,5 +75,11 @@ const vm = new Vue({
 		removeTodo: function(todo) {
 			this.todos.$remove(todo);
 		},
+		removeCompleted: function() {
+			if (this.remaining < this.todos.length) {
+				// If completed todo exists
+				this.todos = filters.active(this.todos);
+			}
+		}
 	},
 });
