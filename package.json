@@ -8,29 +8,25 @@
   },
   "author": "remonbonbon",
   "license": "MIT",
-  "scripts": {
-    "dev": "webpack --hide-modules --watch",
-    "build": "cross-env NODE_ENV=production webpack --hide-modules --display-chunks --progress"
-  },
   "engines": {
     "node": "^4.3.2"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bootstrap": "^4.0.0-alpha.2",
     "compression": "^1.6.1",
     "config": "^1.19.0",
     "express": "^4.13.4",
+    "font-awesome": "^4.5.0",
     "log4js": "^0.6.32",
     "vue": "^1.0.17"
   },
   "devDependencies": {
-    "cross-env": "^1.0.7",
-    "css-loader": "^0.23.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^2.9.0",
-    "jade-loader": "^0.8.0",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0",
-    "webpack": "^1.12.14"
+    "gulp": "^3.9.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "webpack-stream": "^3.1.0"
   }
 }

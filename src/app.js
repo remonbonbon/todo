@@ -119,7 +119,7 @@ const vm = new Vue({
 			if (!value) {
 				return;
 			}
-			Vue.nextTick(() => {
+			Vue.nextTick(function() {
 				// Focus on input element
 				this.el.focus();
 			});

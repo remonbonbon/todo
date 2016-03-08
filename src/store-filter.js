@@ -3,7 +3,7 @@
 const STORAGE_KEY = 'filter';
 
 module.exports = {
-	fetch: function () {
+	fetch: function() {
 		return JSON.parse(localStorage.getItem(STORAGE_KEY) || '"all"');
 	},
 	save: function(filter) {
