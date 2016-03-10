@@ -2,12 +2,35 @@
 
 const STORAGE_KEY = 'todos';
 
+
 module.exports = {
-	fetch: function() {
-		return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	fetch: function(done) {
+		done = done ? done : function() {};
+
+		fetch('todo').then(function(res) {
+			return res.json();
+		}).catch((err) => {
+			done(err);
+		}).then((json) => {
+			done(null, json);
+		});
 	},
-	save: function(todos) {
+	save: function(todos, done) {
+		done = done ? done : function() {};
+
 		console.log(JSON.stringify(todos));
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+		fetch('todo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(todos)
+		}).then(function(res) {
+			return res.json();
+		}).catch((err) => {
+			done(err);
+		}).then((json) => {
+			done(null, json);
+		});
 	}
 };
