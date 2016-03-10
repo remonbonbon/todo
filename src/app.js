@@ -125,9 +125,10 @@ const vm = new Vue({
 			if (!value) {
 				return;
 			}
+			var el = this.el;
 			Vue.nextTick(function() {
 				// Focus on input element
-				this.el.focus();
+				el.focus();
 			});
 		}
 	},
