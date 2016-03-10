@@ -31,7 +31,7 @@ const vm = new Vue({
 		beforeEditTitle: '',
 	},
 	created: function() {
-		TodoStore.fetch((err, json) => {
+		TodoStore.fetch(function(err, json) {
 			if (err) return console.log('parsing failed', err);
 			this.todos = json;
 		});

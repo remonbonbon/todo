@@ -9,9 +9,9 @@ module.exports = {
 
 		fetch('todo').then(function(res) {
 			return res.json();
-		}).catch((err) => {
+		}).catch(function(err) {
 			done(err);
-		}).then((json) => {
+		}).then(function(json) {
 			done(null, json);
 		});
 	},
@@ -27,9 +27,9 @@ module.exports = {
 			body: JSON.stringify(todos)
 		}).then(function(res) {
 			return res.json();
-		}).catch((err) => {
+		}).catch(function(err) {
 			done(err);
-		}).then((json) => {
+		}).then(function(json) {
 			done(null, json);
 		});
 	}
