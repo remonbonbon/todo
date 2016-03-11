@@ -7,7 +7,9 @@ module.exports = {
 	fetch: function(done) {
 		done = done ? done : function() {};
 
-		fetch('todo').then(function(res) {
+		fetch('todo', {
+			credentials: 'same-origin',	// send cookie for basic auth
+		}).then(function(res) {
 			return res.json();
 		}).catch(function(err) {
 			done(err);
@@ -20,9 +22,10 @@ module.exports = {
 
 		console.log(JSON.stringify(todos));
 		fetch('todo', {
+			credentials: 'same-origin',	// send cookie for basic auth
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(todos)
 		}).then(function(res) {

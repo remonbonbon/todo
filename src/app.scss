@@ -1,3 +1,4 @@
+$gray-light: #969696 !default;
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 $fa-font-path: './fonts' !default;
@@ -7,9 +8,113 @@ $fa-font-path: './fonts' !default;
 	display: none;
 }
 
-.todo__toggle {
-	:hover {
-    color: $brand-success;
-		cursor: pointer
+.newTodo {
+	@extend .form-control;
+}
+
+.toolbar {
+	margin-top: 1rem;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-between;
+
+	.filters {
+		flex: 0 0 auto;
+		display: inline;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			display: inline;
+		}
+		li > button {
+			@extend .btn;
+			@extend .btn-primary-outline;
+		}
+	}
+
+	.todoCount {
+		flex: 1 1 auto;
+		margin: 0 .5em;
+	}
+	.clearComplete {
+		flex: 1 1 auto;
+		text-align: right;
+		button {
+			@extend .btn;
+			@extend .btn-sm;
+			@extend .btn-danger-outline;
+		}
+	}
+
+	.filters, .todoCount, .clearComplete {
+		margin-top: .2rem;
+		margin-bottom: .2rem;
+	}
+}
+
+.todoList {
+	display: flex;
+	flex-flow: column nowrap;
+	margin-top: 1rem;
+}
+
+.todo {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+	padding: .5rem 0;
+	margin: 3px 0;
+
+	&:hover {
+		background-color: $table-bg-hover;
+	}
+
+	&__toggle {
+		flex: 0 0 auto;
+		font-size: 130%;
+		width: 1.3em;
+
+		&:hover {
+			cursor: pointer
+		}
+
+		@extend .text-muted;
+		.completed & {
+			@extend .text-success;
+		}
+	}
+	&__title {
+		flex: 1 1 auto;
+		margin: 0 1rem;
+
+		&__edit {
+			width: 100%;
+		}
+		&__text {
+			.completed & {
+				text-decoration: line-through;
+				@extend .text-muted;
+			}
+		}
+		:not(.completed).lowPriority & {
+			@extend .text-muted;
+		}
+		:not(.completed).highPriority & {
+			font-weight: bold;
+		}
+	}
+	&__priority {
+		flex: 0 0 auto;
+		width: 4.5rem;
+	}
+	&__delete {
+		@extend .btn;
+		@extend .btn-sm;
+		@extend .btn-danger-outline;
+		padding: .15rem .3rem;
+		margin-left: 1.5rem;
 	}
 }

@@ -23,7 +23,7 @@ var filters = {
 const vm = new Vue({
 	el: '#app',
 	data: {
-		todos: [],
+		todos: null,
 		filter: FilterStore.fetch(),
 		newTodo: '',
 		editedTodo: null,
@@ -32,13 +32,17 @@ const vm = new Vue({
 	},
 	created: function() {
 		TodoStore.fetch(function(err, json) {
-			if (err) return console.log('parsing failed', err);
+			if (err) {
+				console.log('parsing failed', err);
+				json = [];
+			}
 			this.todos = json;
 		}.bind(this));
 	},
 	watch: {
 		todos: {
-			handler: function(todos) {
+			handler: function(todos, old) {
+				if (!old) return;	// ignore first fetch
 				TodoStore.save(todos);
 			},
 			deep: true

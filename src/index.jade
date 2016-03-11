@@ -7,59 +7,65 @@ block head
 block scripts
 	+useScript("bundle.js")
 
+
+mixin newTodo
+	input.newTodo(
+		autofocus
+		autocomplete="off"
+		placeholder="What needs to be done?"
+		v-model="newTodo"
+		@keyup.enter="addTodo")
+
+mixin toolbar
+	.toolbar.clearfix
+		ul.filters
+			li
+				button(@click="filter = 'all'"
+					:class="{active: filter === 'all'}") All
+			li
+				button(@click="filter = 'active'"
+					:class="{active: filter === 'active'}") Active
+			li
+				button(@click="filter = 'completed'"
+					:class="{active: filter === 'completed'}") Completed
+		.todoCount
+			| #[strong(v-text="remaining")] {{remaining | pluralize 'item'}} left
+		.clearComplete
+			button(@click="removeCompleted"
+				disabled="{{ remaining === todos.length }}") Clear completed
+
+mixin todoList
+	datalist#priorityList
+		option(value="0")
+		option(value="1")
+		option(value="2")
+	.todoList
+		.todo(v-for="todo in filteredTodos"
+			:class="{completed: todo.completed,\
+				lowPriority: todo.priority === 0, \
+				highPriority: todo.priority === 2}")
+			.todo__toggle(@click="toggleTodo(todo)")
+				i.fa.fa-lg(:class="{\
+						'fa-check-square-o': todo.completed,\
+						'fa-square-o': !todo.completed,\
+					}")
+			.todo__title
+				input.todo__title__edit(type="text" v-if="todo === editedTodo"
+					v-model="editedTodoTitle"
+					v-todo-focus="todo === editedTodo"
+					@blur="doneEdit(todo)"
+					@keyup.enter="doneEdit(todo)"
+					@keyup.esc="cancelEdit(todo)")
+				.todo__title__text(@click="editTodo(todo)" v-else
+					v-text="todo.title")
+			input.todo__priority(type="range" list="priorityList"
+					min="0" max="2" v-model="todo.priority" number)
+			button.todo__delete(@click="removeTodo(todo)")
+				i.fa.fa-lg.fa-times
+
 block content
 	#app.container(v-cloak)
-		h1 todos
-		header
-			input.form-control(
-				autofocus
-				autocomplete="off"
-				placeholder="What needs to be done?"
-				v-model="newTodo"
-				@keyup.enter="addTodo")
-		section
-			span #[strong(v-text="remaining")] {{remaining | pluralize 'item'}} left
-			label
-				input(type="checkbox" v-model="allDone")
-				| All Done
-			button.btn.btn-default(@click="filter = 'all'"
-				:class="{active: filter === 'all'}") All
-			button.btn.btn-default(@click="filter = 'active'"
-				:class="{active: filter === 'active'}") Active
-			button.btn.btn-default(@click="filter = 'completed'"
-				:class="{active: filter === 'completed'}") Completed
-			button.btn.btn-default.pull-right(@click="removeCompleted") Clear completed
-		section
-			table.table.table-hover
-				tbody
-					tr(v-for="todo in filteredTodos"
-						:class="{success: todo.completed}"
-						style="display: flex; flex-flow: row nowrap;")
-						td.todo__toggle(@click="toggleTodo(todo)" style="flex: 0 0 auto;")
-							i.fa.fa-lg.fa-fw.fa-check-square-o.text-success(v-if="todo.completed")
-							i.fa.fa-lg.fa-fw.fa-square-o.text-muted(v-else)
-						td(style="flex: 1 1 auto; width: 100%" @click="editTodo(todo)")
-							input(class="edit" type="text" v-if="todo === editedTodo"
-								v-model="editedTodoTitle"
-								v-todo-focus="todo === editedTodo"
-								@blur="doneEdit(todo)"
-								@keyup.enter="doneEdit(todo)"
-								@keyup.esc="cancelEdit(todo)"
-								style="width: 100%")
-							span(v-else
-								style="word-break: break-all") {{ todo.title }}
-						td(style="flex: 0 0 auto")
-							input(type="range" list="priorityList"
-								min="0" max="2" style="width: 6em; display: inline-block"
-								v-model="todo.priority" number)
-						td(style="flex: 0 0 auto; min-width: 4em")
-							span.label.label-default(v-if="todo.priority === 0") Low
-							span.label.label-warning(v-if="todo.priority === 2") High
-						td(style="flex: 0 0 auto")
-							button.btn.btn-xs.btn-danger(@click="removeTodo(todo)")
-								i.fa.fa-lg.fa-times
-		.hidden
-			datalist#priorityList
-				option(value="0")
-				option(value="1")
-				option(value="2")
+		h2 ToDO
+		+newTodo
+		+toolbar
+		+todoList
