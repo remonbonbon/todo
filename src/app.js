@@ -34,7 +34,7 @@ const vm = new Vue({
 		TodoStore.fetch(function(err, json) {
 			if (err) return console.log('parsing failed', err);
 			this.todos = json;
-		});
+		}.bind(this));
 	},
 	watch: {
 		todos: {
