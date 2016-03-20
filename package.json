@@ -19,7 +19,7 @@
     "express": "^4.13.4",
     "font-awesome": "^4.5.0",
     "log4js": "^0.6.32",
-    "vue": "^1.0.17"
+    "vue": "^1.0.18"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
