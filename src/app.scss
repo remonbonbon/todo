@@ -1,11 +1,14 @@
-$gray-light: #969696;
-@import '../node_modules/bootstrap/scss/bootstrap';
+@import 'custom-bootstrap';
 
 $fa-font-path: './fonts';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
 [v-cloak] {
 	display: none;
+}
+
+#app {
+	margin-top: 1rem;
 }
 
 .newTodo {
@@ -68,10 +71,6 @@ $fa-font-path: './fonts';
 	padding: .5rem 0;
 	margin: 3px 0;
 
-	&:hover {
-		background-color: $table-bg-hover;
-	}
-
 	&__toggle {
 		flex: 0 0 auto;
 		font-size: 130%;
@@ -81,7 +80,7 @@ $fa-font-path: './fonts';
 			cursor: pointer
 		}
 
-		@extend .text-muted;
+		color: #444;
 		.completed & {
 			@extend .text-success;
 		}
@@ -91,12 +90,14 @@ $fa-font-path: './fonts';
 		margin: 0 1rem;
 
 		&__edit {
+			@extend .form-control;
+			padding: .1rem .5rem;
 			width: 100%;
 		}
 		&__text {
 			.completed & {
-				text-decoration: line-through;
 				@extend .text-muted;
+				text-decoration: line-through;
 			}
 		}
 	}

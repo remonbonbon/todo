@@ -1,0 +1,26 @@
+// Dark background
+$body-bg: #222;
+$body-color: #fff;
+$font-family-sans-serif: "游ゴシック体", 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', "メイリオ", Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+
+// Single color theme
+$brand-primary: #ff8229;
+$brand-success: $brand-primary;
+$brand-info: $brand-primary;
+$brand-warning: $brand-primary;
+$brand-danger:$brand-primary;
+
+$text-muted: desaturate($brand-primary, 50%);
+
+$input-bg: darken($brand-primary, 40%);
+$input-color: $body-color;
+$input-color-placeholder: #888;
+$input-border-color: darken($brand-primary, 30%);
+$input-border-focus: darken($brand-primary, 10%);
+
+// Change button focus border color
+button:focus {
+	outline-color: $input-border-focus !important;
+}
+
+@import '../node_modules/bootstrap/scss/bootstrap';

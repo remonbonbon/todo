@@ -1,7 +1,8 @@
 extends ./layout.jade
 
 block head
-	title todos
+	title ToDO
+	meta(name="theme-color" content="#222")
 	+useCss("bundle.css")
 
 block scripts
@@ -43,10 +44,7 @@ mixin todoList
 		.todo(v-for="todo in filteredTodos"
 			:class="{completed: todo.completed}")
 			.todo__toggle(@click="toggleTodo(todo)")
-				i.fa.fa-lg(:class="{\
-						'fa-check-square-o': todo.completed,\
-						'fa-square-o': !todo.completed,\
-					}")
+				i.fa.fa-lg.fa-check
 			.todo__title
 				input.todo__title__edit(type="text" v-if="todo === editedTodo"
 					v-model="editedTodoTitle"
@@ -60,8 +58,7 @@ mixin todoList
 				i.fa.fa-lg.fa-times
 
 block content
-	#app.container(v-cloak)
-		h2 ToDO
+	.container#app(v-cloak)
 		+newTodo
 		+toolbar
 		+todoList
