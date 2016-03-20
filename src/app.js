@@ -17,7 +17,7 @@
 		}
 	};
 
-	const vm = new Vue({
+	new Vue({
 		el: '#app',
 		data: {
 			todos: null,

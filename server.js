@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/*eslint strict: [2, "global"]*/
 'use strict';
 
 const logger = require('log4js').getLogger();

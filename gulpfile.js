@@ -1,3 +1,4 @@
+/*eslint strict: [2, "global"]*/
 'use strict';
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
@@ -6,9 +7,13 @@ const webpack = require('webpack-stream').webpack;
 const jade = require('gulp-jade');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
+const eslint = require('gulp-eslint');
 
 // Source and output pathes
 const BUILD = {
+	server: {
+		watch: './*.js',
+	},
 	js: {
 		entry: './src/app.js',
 		watch: './src/**/*.js',
@@ -39,6 +44,23 @@ const BUILD = {
 var debug = false;
 gulp.task('debug', () => debug = true);
 
+// ---------- ESlint ----------
+gulp.task('eslint-server', () => gulp.src(BUILD.server.watch)
+	.pipe(eslint('.eslintrc'))
+	.pipe(eslint.format())
+);
+gulp.task('eslint-client', () => gulp.src(BUILD.js.watch)
+	.pipe(eslint('.eslintrc'))
+	.pipe(eslint.format())
+);
+gulp.task('eslint', ['eslint-server', 'eslint-client']);
+
+gulp.task('watch-eslint-server', () =>
+	gulp.watch(BUILD.server.watch, ['eslint-server']));
+gulp.task('watch-eslint-client', () =>
+	gulp.watch(BUILD.js.watch, ['eslint-client']));
+gulp.task('watch-eslint', ['watch-eslint-server', 'watch-eslint-client']);
+
 // ---------- Build JavaScript ----------
 var watchWebpack = false;
 gulp.task('webpack', () => gulp.src(BUILD.js.entry)
@@ -65,7 +87,7 @@ gulp.task('webpack', () => gulp.src(BUILD.js.entry)
 			// Forced to production for 3rd-party modules.
 			new webpack.DefinePlugin({
 				'process.env': {
-					'NODE_ENV': '"production"'
+					NODE_ENV: '"production"'
 				}
 			}),
 		].filter((p) => p),
@@ -122,12 +144,14 @@ gulp.task('watch-static', staticWatches);
 
 // ---------- Shortcut tasks ----------
 gulp.task('watch', [
+	'watch-eslint',
 	'watch-webpack',
 	'watch-jade',
 	'watch-sass',
 	'watch-static',
 ]);
 gulp.task('build', [
+	'eslint',
 	'webpack',
 	'jade',
 	'sass',

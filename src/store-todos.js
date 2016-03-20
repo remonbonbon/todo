@@ -1,9 +1,6 @@
 (function() {
 	'use strict';
 
-	const STORAGE_KEY = 'todos';
-
-
 	module.exports = {
 		fetch: function(done) {
 			done = done ? done : function() {};

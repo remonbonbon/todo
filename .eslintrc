@@ -1,0 +1,56 @@
+{
+	extends: "eslint:recommended",
+	env: {
+		node: true,
+		browser: true,
+		es6: true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+	"rules": {
+		// ------------------- Possible Errors -------------------
+		"comma-dangle": 0,
+		"no-console": 0,
+		"no-unexpected-multiline": 1,
+
+		// ------------------- Best Practices -------------------
+		"block-scoped-var": 1,
+		"eqeqeq": 2,
+		"no-eq-null": 0,
+		"radix": 1,
+
+		// ------------------- Strict Mode -------------------
+		"strict": [2, "function"],
+
+		// ------------------- Variables -------------------
+		"no-shadow": 1,
+		"no-unused-vars": [1, {"vars": "all", "args": "none"}],
+
+		// ------------------- Node.js and CommonJS -------------------
+
+		// ------------------- Stylistic Issues -------------------
+		"array-bracket-spacing": [1, "never"],
+		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
+		"camelcase": [2, {"properties": "always"}],
+		"comma-spacing": [1, {"before": false, "after": true}],
+		"comma-style": [2, "last"],
+		"computed-property-spacing": [1, "never"],
+		"indent": [2, "tab", {"SwitchCase": 1}],
+		"linebreak-style": [2, "unix"],
+		"no-spaced-func": 1,
+		"no-trailing-spaces": 1,
+		"object-curly-spacing": [1, "never"],
+		"quote-props": [2, "as-needed"],
+		"quotes": [2, "single", "avoid-escape"],
+		"semi" : 2,
+		"keyword-spacing": 2,
+		"space-before-blocks": 1,
+		"space-before-function-paren": [1, "never"],
+		"space-in-parens": [1, "never"],
+		"space-infix-ops": 1,
+
+		// ------------------- ECMAScript 6 -------------------
+		"arrow-spacing": 2,
+	}
+}
