@@ -77,8 +77,7 @@ const vm = new Vue({
 			}
 			this.todos.push({
 				title: value,
-				completed: false,
-				priority: 1
+				completed: false
 			});
 			this.newTodo = '';
 		},

@@ -1,7 +1,7 @@
-$gray-light: #969696 !default;
+$gray-light: #969696;
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-$fa-font-path: './fonts' !default;
+$fa-font-path: './fonts';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
 [v-cloak] {
@@ -99,16 +99,6 @@ $fa-font-path: './fonts' !default;
 				@extend .text-muted;
 			}
 		}
-		:not(.completed).lowPriority & {
-			@extend .text-muted;
-		}
-		:not(.completed).highPriority & {
-			font-weight: bold;
-		}
-	}
-	&__priority {
-		flex: 0 0 auto;
-		width: 4.5rem;
 	}
 	&__delete {
 		@extend .btn;

@@ -41,9 +41,7 @@ mixin todoList
 		option(value="2")
 	.todoList
 		.todo(v-for="todo in filteredTodos"
-			:class="{completed: todo.completed,\
-				lowPriority: todo.priority === 0, \
-				highPriority: todo.priority === 2}")
+			:class="{completed: todo.completed}")
 			.todo__toggle(@click="toggleTodo(todo)")
 				i.fa.fa-lg(:class="{\
 						'fa-check-square-o': todo.completed,\
@@ -58,8 +56,6 @@ mixin todoList
 					@keyup.esc="cancelEdit(todo)")
 				.todo__title__text(@click="editTodo(todo)" v-else
 					v-text="todo.title")
-			input.todo__priority(type="range" list="priorityList"
-					min="0" max="2" v-model="todo.priority" number)
 			button.todo__delete(@click="removeTodo(todo)")
 				i.fa.fa-lg.fa-times
 
