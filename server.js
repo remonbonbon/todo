@@ -18,7 +18,13 @@ app.use(bodyParser.json());
 
 // Get ToDo
 app.get('/todo', (req, res) => {
-	res.sendFile(TODO_FILEPATH, (err) => {
+	const option = {
+		// Disable cache
+		etag: false,
+		lastModified: false,
+		maxAge: 0,
+	};
+	res.sendFile(TODO_FILEPATH, option, (err) => {
 		// If not exist, send empty.
 		if (err) res.json([]);
 	});
