@@ -40,11 +40,23 @@ var debug = false;
 gulp.task('debug', () => debug = true);
 
 // ---------- Build JavaScript ----------
+var watchWebpack = false;
 gulp.task('webpack', () => gulp.src(BUILD.js.entry)
 	.pipe(plumber())
 	.pipe(gulpWebpack({
+		watch: watchWebpack,
 		output: {
 			filename: BUILD.js.output
+		},
+		module: {
+			loaders: [{
+				test: /\.js$/,
+				exclude: /(node_modules)/,
+				loader: 'babel',
+				query: {
+					presets: ['es2015']
+				}
+			}]
 		},
 		plugins: [
 			debug ? null : new webpack.optimize.UglifyJsPlugin({
@@ -57,10 +69,21 @@ gulp.task('webpack', () => gulp.src(BUILD.js.entry)
 				}
 			}),
 		].filter((p) => p),
+	}, null, (err, stats) => {
+		console.log(stats.toString({
+			colors: true,
+			hash: false,
+			version: false,
+			timings: true,
+			assets: true,
+			chunks: false,
+			modules: false,
+			cachedAssets: false,
+		}));
 	}))
 	.pipe(gulp.dest(BUILD.js.dest))
 );
-gulp.task('watch-webpack', () => gulp.watch(BUILD.js.watch, ['webpack']));
+gulp.task('watch-webpack', () => watchWebpack = true);
 
 // ---------- Build HTML ----------
 gulp.task('jade', () => gulp.src(BUILD.html.entry)
@@ -112,6 +135,6 @@ gulp.task('build', [
 ]);
 gulp.task('default', [
 	'debug',
-	'build',
 	'watch',
+	'build',
 ]);
