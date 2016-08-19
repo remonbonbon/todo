@@ -33,6 +33,10 @@
 					console.log('parsing failed', err);
 					json = [];
 				}
+				if (!Array.isArray(json)) {
+					console.log('Fetched data is not array. Initialize data.');
+					json = [];
+				}
 				this.todos = json;
 			});
 		},

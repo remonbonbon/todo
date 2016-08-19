@@ -33,10 +33,16 @@ app.get('/todo', (req, res) => {
 
 // Save ToDo
 app.post('/todo', (req, res) => {
-	fs.writeFile(TODO_FILEPATH, JSON.stringify(req.body), 'utf-8', function(err) {
+	const todos = req.body;
+	if (!Array.isArray(todos)) {
+		logger.warn('Received data is not array: %j', todos);
+		res.status(400).json({error: 'Invalid format'});
+		return;
+	}
+	fs.writeFile(TODO_FILEPATH, JSON.stringify(todos), 'utf-8', function(err) {
 		if (err) {
 			logger.warn(err);
-			res.json(500, {error: 'Save failed'});
+			res.status(500).json({error: 'Save failed'});
 		} else {
 			res.json({message: 'Save succeeded'});
 		}
